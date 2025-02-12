@@ -55,7 +55,7 @@ public class RecipeFileHandler {
     public void addRecipe(String recipeName, String ingredients) {
         String filename =  "app/src/main/resources/recipes.txt";
 
-        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename))){
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter(filename,true))){
             writer.write(recipeName + "," + ingredients);
             writer.newLine();
         }catch(IOException e){
