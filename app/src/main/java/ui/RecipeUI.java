@@ -42,6 +42,7 @@ public class RecipeUI {
                         displayRecipes();
                         break;
                     case "2":
+                        addNewRecipe();
                         // 設問2: 新規登録機能
                         break;
                     case "3":
@@ -64,14 +65,22 @@ public class RecipeUI {
      * 設問1: 一覧表示機能
      * RecipeFileHandlerから読み込んだレシピデータを整形してコンソールに表示します。
      */
-    private void displayRecipes() {
-        RecipeFileHandler recipe1 = new RecipeFileHandler();
-        ArrayList<String> array = recipe1.readRecipes();
-        System.out.println("Recipes:");
-        System.out.println("---------------");
-        System.out.println(array);
-
+    public void displayRecipes() {
+        ArrayList<String> array = fileHandler.readRecipes();
+        if(array.isEmpty()){
+            System.out.println("No recipes available.");
+        }else {
+            System.out.println("Recipes:");
+            System.out.println("-----------------------------------");
+            for (String recipe2 : array) {
+                String[] recipe3 = recipe2.split("," , 2);
+                System.out.println("Recipe Name: " + recipe3[0]);
+                System.out.println("Main Ingredients: " + recipe3[1]);
+                System.out.println("-----------------------------------");
+            }
+        }
     }
+    
 
     /**
      * 設問2: 新規登録機能
@@ -80,10 +89,17 @@ public class RecipeUI {
      * @throws java.io.IOException 入出力が受け付けられない
      */
     private void addNewRecipe() throws IOException {
-        
 
+        BufferedReader reader = new BufferedReader(new InputStreamReader(System.in));
+        System.out.println("Enter recipe name:");
+        String recipename = reader.readLine();
 
-    
+        System.out.println("Enter main ingredients (comma separated):");
+        String recipe3 = reader.readLine();
+
+        fileHandler.addRecipe(recipename, recipe3);
+
+        System.out.println("Recipe added successfully.");
     }
 
     /**
